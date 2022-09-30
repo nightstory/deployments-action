@@ -1,0 +1,1 @@
+export const ENV_KEY_DEPLOYMENT_ID: string = 'DA_DEPLOYMENT_ID'

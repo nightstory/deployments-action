@@ -1,0 +1,39 @@
+{
+  "name": "deployments-action",
+  "description": "Setup GitHub and Jira deployments",
+  "version": "1.0.0",
+  "keywords": [
+    "github",
+    "actions",
+    "github actions",
+    "jira",
+    "deployment"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nightstory/deployments-action.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nightstory/deployments-action/issues"
+  },
+  "homepage": "https://github.com/nightstory/deployments-action#readme",
+  "author": "nightstory",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/exec": "^1.1.0",
+    "@actions/github": "^5.1.0",
+    "@actions/http-client": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.17",
+    "@vercel/ncc": "^0.33.3",
+    "typescript": "^4.5.5"
+  },
+  "scripts": {
+    "build_main": "node_modules/.bin/ncc build --license licenses.txt --source-map -m -q src/main.ts -o lib_main",
+    "build_post": "node_modules/.bin/ncc build --license licenses.txt --source-map -m -q src/post.ts -o lib_post",
+    "build": "yarn build_main && yarn build_post"
+  }
+}
