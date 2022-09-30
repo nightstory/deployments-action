@@ -57,14 +57,14 @@ export const createJiraDeployment = async (options: Options) => {
 
 const mapDeployment = ({context, deploymentId, environment, issueKeys, ...options}: Options) => {
   const guessTypes = types.filter(t => t.indexOf(environment) !== -1 || environment.indexOf(t) !== -1)
-  const num = Number.parseInt(process.env['GITHUB_RUN_NUMBER']!) + Number.parseInt(process.env['GITHUB_RUN_ATTEMPT']!) - 1
+  const num = Number.parseInt(process.env['GITHUB_RUN_NUMBER']!)
   const uniqueId = `${context.payload.repository!.full_name}/${context.workflow}/#${num}`
   const envId = `${context.payload.repository!.full_name}/${environment}`.slice(0, 255)
 
   return ({
     schemaVersion: '1.0',
     deploymentSequenceNumber: num,
-    updateSequenceNumber: num,
+    updateSequenceNumber: new Date().getTime() / 1000,
     displayName: uniqueId.slice(0, 255),
     url: options.jobUrl,
     description: options.description.slice(0, 255),
