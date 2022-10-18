@@ -12,6 +12,8 @@ export interface Options {
   readonly jiraClientSecret: string
   readonly jiraProjects: string[]
   readonly jiraFailNoTickets: boolean
+
+  readonly dockerTags: string[]
 }
 
 const findOption: (inputKey: string, envKey: string) => (string | null) =
@@ -51,12 +53,17 @@ const getOptions: () => Options = () => ({
   jiraClientSecret: requireOption('jira_client_secret', 'DA_JIRA_CLIENT_SECRET'),
   jiraProjects: parseArray(findOption('jira_projects', 'DA_JIRA_PROJECTS')),
   jiraFailNoTickets: getFlag('jira_fail_no_tickets', 'DA_JIRA_FAIL_NO_TICKETS', false),
+  dockerTags: parseArray(findOption('docker_tags', 'DA_DOCKER_TAGS')),
 })
 
-const parseArray = (input: string | null) => {
+const parseArray: (input: (string | null)) => (string[]) = (input) => {
   if (!input || input.length === 0) return []
 
-  return input.split(',').filter(i => i.length > 0)
+  return input.split('\n')
+    .map(line => line.split(','))
+    .flat()
+    .map(i => i.trim())
+    .filter(i => i.length > 0)
 }
 
 

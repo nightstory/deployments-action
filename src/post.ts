@@ -5,9 +5,11 @@ import getOptions, {Options, validateOptions} from './options'
 import {createGithubDeploymentStatus} from './github/github_deployments'
 import {ENV_KEY_DEPLOYMENT_ID} from './const'
 import {getCurrentJob, isJobSuccessful} from './github/github_jobs'
-import {createJiraDeployment} from "./jira/jira_deployments"
-import {extractMeaningfulStrings} from "./github/github_events"
-import {extractJiraTickets} from "./jira/jira_tickets"
+import {createJiraDeployment} from './jira/jira_deployments'
+import {extractMeaningfulStrings} from './github/github_events'
+import {extractJiraTickets} from './jira/jira_tickets'
+import {dockerPrintImagesInfo} from './docker/docker_images_info';
+import * as util from 'util';
 
 const main = async () => {
   const options: Options = getOptions()
@@ -61,8 +63,14 @@ const main = async () => {
     if (options.jiraFailNoTickets) {
       core.setFailed('No JIRA-IDs found')
       process.exit(1)
-    } else {
-      core.warning('No JIRA-IDs extracted, skipping jira deployment')
+    }
+  }
+
+  if (options.dockerTags.length > 0) {
+    try {
+      await dockerPrintImagesInfo(options.dockerTags)
+    } catch (e) {
+      core.setFailed(util.types.isNativeError(e) ? e : `${e}`)
     }
   }
 }

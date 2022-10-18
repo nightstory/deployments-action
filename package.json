@@ -22,7 +22,7 @@
   "author": "nightstory",
   "dependencies": {
     "@actions/core": "^1.6.0",
-    "@actions/exec": "^1.1.0",
+    "@actions/exec": "^1.1.1",
     "@actions/github": "^5.1.0",
     "@actions/http-client": "^2.0.1"
   },

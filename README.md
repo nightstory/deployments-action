@@ -36,6 +36,10 @@ The result (success or failure) is calculated in post-action (it runs even if th
     - Environment alternative: `DA_JIRA_FAIL_NO_TICKETS`
     - required: `false`, default: `false`
     - Set to true to fail the workflow if no JIRA IDs extracted. Uses `jira_projects`, if specified.
+- `docker_tags`
+    - Environment alternative: `DA_DOCKER_TAGS`
+    - required: `false`
+    - Docker tags to print as a notice in the workflow run (tag, sha, size). Use CSV or multiline.
 
 ## Example usage
 

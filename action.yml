@@ -31,6 +31,9 @@ inputs:
   jira_fail_no_tickets:
     description: 'Fail if no JIRA IDs found'
     required: false
+  docker_tags:
+    description: 'List of Docker tags related to this deployment for info printing'
+    required: false
 runs:
   using: 'node16'
   main: 'lib_main/index.js'
